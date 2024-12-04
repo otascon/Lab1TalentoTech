@@ -34,6 +34,11 @@ function mostrarTareas() {
             lista.appendChild(li);
         });
     }
+    function eliminarTarea(index) {
+        let tareas = JSON.parse(localStorage.getItem("tareas")) || [];
+        tareas.splice(index, 1);
+        localStorage.setItem("tareas", JSON.stringify(tareas));
+    }
     function editarTarea(index) {
         let tareas = JSON.parse(localStorage.getItem("tareas")) || [];
         tareas[index] = prompt("Editar tarea:", tareas[index]);
