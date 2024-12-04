@@ -34,5 +34,9 @@ function mostrarTareas() {
             lista.appendChild(li);
         });
     }
-
+    function editarTarea(index) {
+        let tareas = JSON.parse(localStorage.getItem("tareas")) || [];
+        tareas[index] = prompt("Editar tarea:", tareas[index]);
+        localStorage.setItem("tareas", JSON.stringify(tareas));
+    }
 </script>
