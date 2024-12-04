@@ -20,5 +20,19 @@
         localStorage.setItem("tareas", JSON.stringify(tareas));
         document.getElementById("tarea").value = "";
     }
+function mostrarTareas() {
+        const lista = document.getElementById("listaTareas");
+        lista.innerHTML = "";
+        const tareas = JSON.parse(localStorage.getItem("tareas")) || [];
+        tareas.forEach((tarea, index) => {
+            const li = document.createElement("li");
+            li.textContent = tarea;
+            li.innerHTML += `
+                <button onclick="eliminarTarea(${index})">Eliminar</button>
+                <button onclick="editarTarea(${index})">Editar</button>
+            `;
+            lista.appendChild(li);
+        });
+    }
 
 </script>
