@@ -1,0 +1,50 @@
+<section id="tareas">
+    <hr>
+    <h1>Administrar Lista de Tareas</h1>
+    <hr>
+    <form onsubmit="crearTarea(); return false;" method="post">
+        <label for="tarea">Nueva Tarea:</label>
+        <input type="text" id="tarea" placeholder="Escribe una tarea" required />
+        <br>
+        <input type="submit" value="Añadir Tarea" />
+    </form>
+    <br>
+    <input type="button" onclick="mostrarTareas()" value="Mostrar Tareas" />
+    <ul id="listaTareas"></ul>
+</section>
+<script>
+    function crearTarea() {
+        const tarea = document.getElementById("tarea").value;
+        let tareas = JSON.parse(localStorage.getItem("tareas")) || [];
+        tareas.push(tarea);
+        localStorage.setItem("tareas", JSON.stringify(tareas));
+        document.getElementById("tarea").value = "";
+    }
+
+    function mostrarTareas() {
+        const lista = document.getElementById("listaTareas");
+        lista.innerHTML = "";
+        const tareas = JSON.parse(localStorage.getItem("tareas")) || [];
+        tareas.forEach((tarea, index) => {
+            const li = document.createElement("li");
+            li.textContent = tarea;
+            li.innerHTML += `
+                <button onclick="eliminarTarea(${index})">Eliminar</button>
+                <button onclick="editarTarea(${index})">Editar</button>
+            `;
+            lista.appendChild(li);
+        });
+    }
+
+    function eliminarTarea(index) {
+        let tareas = JSON.parse(localStorage.getItem("tareas")) || [];
+        tareas.splice(index, 1);
+        localStorage.setItem("tareas", JSON.stringify(tareas));
+    }
+
+    function editarTarea(index) {
+        let tareas = JSON.parse(localStorage.getItem("tareas")) || [];
+        tareas[index] = prompt("Editar tarea:", tareas[index]);
+        localStorage.setItem("tareas", JSON.stringify(tareas));
+    }
+</script>
